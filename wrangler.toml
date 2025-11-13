@@ -1,4 +1,4 @@
-name = "serverless-discordbot"
+name = "dacouchbot"
 main = "src/index.ts"
 compatibility_date = "2022-10-29"
-node_compat = true
+compatibility_flags = ["nodejs_compat"]
