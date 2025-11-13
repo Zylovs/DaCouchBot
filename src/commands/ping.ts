@@ -1,16 +1,15 @@
-import { Command } from "./"
+import { Command } from "./types"; // We’ll create a `types.ts` for TS types
 
-const command: Command = {
-    data: {
-        name: "ping",
-        description: "Ping the bot"
-    },
+const ping: Command = {
+  data: {
+    name: "ping",
+    description: "Ping the bot"
+  },
 
-    async execute(interaction) {
-        return {
-            content: "Pong, "+interaction.member.user.username+"!"
-        }
-    }
-}
+  async execute(interaction) {
+    const username = interaction.member?.user?.username || "there";
+    return { content: `Pong, ${username}!` };
+  }
+};
 
-export default command
+export default ping;

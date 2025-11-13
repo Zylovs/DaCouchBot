@@ -9,17 +9,14 @@
     "env": "wrangler secret:bulk env.json"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250129.0",
+    "@cloudflare/workers-types": "^4.20251113.0",
     "@types/node": "^18.11.7",
-    "@types/node-fetch": "^2.6.2",
-    "typescript": "^5.0.0",
+    "typescript": "^5.2.2",
     "wrangler": "^4.48.0"
   },
   "dependencies": {
-    "20": "^3.1.9",
     "discord-api-types": "^0.37.15",
     "discord-interactions": "^3.2.0",
-    "itty-router": "^2.6.6",
-    "node-fetch": "^2"
+    "itty-router": "^2.6.6"
   }
 }

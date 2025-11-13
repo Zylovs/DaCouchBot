@@ -1,16 +1,41 @@
 import ping from "./ping";
-import { APIApplicationCommandOptionBase, APIUserApplicationCommandGuildInteraction, ApplicationCommandOptionType } from "discord-api-types/v10"
+import type {
+  APIInteraction,
+  InteractionResponseType,
+  APIApplicationCommandOptionBase,
+  APIUserApplicationCommandGuildInteraction,
+  ApplicationCommandOptionType
+} from "discord-api-types";
 
-//@ts-ignore // I just cant find where is the type for command ;-;
-export interface data extends APIApplicationCommandOptionBase<ApplicationCommandOptionType>{
-    type?: ApplicationCommandOptionType
-}
+import type { Command } from "./types"; // your Command interface
 
-export interface Command {
-    data: data,
-    execute: (interaction: APIUserApplicationCommandGuildInteraction) => void
-}
+const commands: Command[] = [ping];
 
-export default [
-    ping
-]
+export default {
+  async fetch(request: Request): Promise<Response> {
+    const body = (await request.json()) as APIInteraction;
+
+    if (body.type === 1) {
+      return new Response(
+        JSON.stringify({ type: InteractionResponseType.Pong }),
+        { headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (body.type === 2) {
+      const command = commands.find(cmd => cmd.data.name === body.data.name);
+      if (!command) return new Response("Command not found", { status: 404 });
+
+      const result = await command.execute(body as APIUserApplicationCommandGuildInteraction);
+
+      return new Response(JSON.stringify({
+        type: InteractionResponseType.ChannelMessageWithSource,
+        data: result
+      }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    return new Response("Unsupported interaction", { status: 400 });
+  }
+};

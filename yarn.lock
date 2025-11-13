@@ -1703,7 +1703,7 @@ __metadata:
     "@cloudflare/workers-types": "npm:^4.20250129.0"
     "@types/node": "npm:^18.11.7"
     "@types/node-fetch": "npm:^2.6.2"
-    discord-api-types: "npm:^0.37.15"
+    discord-api-types: "npm:^0.38.33"
     discord-interactions: "npm:^3.2.0"
     itty-router: "npm:^2.6.6"
     node-fetch: "npm:^2"
@@ -1853,10 +1853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.37.15":
-  version: 0.37.15
-  resolution: "discord-api-types@npm:0.37.15"
-  checksum: 10/4c3482ae41d663d186f7a88adc02e45d9e70a8f19079394d10943a12fc8a40adbde42d35e4a79e861375d3f43344523b7012cc9eb144a412fbeccc15df82ce27
+"discord-api-types@npm:^0.38.33":
+  version: 0.38.33
+  resolution: "discord-api-types@npm:0.38.33"
+  checksum: 10/0776401c76a3715c50094014f6ec71c3e9fdb3a6e391f08299e3b2a3a30e0a1f07b024d2a6b3b6ce6ef2ec3400339665b42e4f9835c463c4f7ee3254d0406780
   languageName: node
   linkType: hard
 

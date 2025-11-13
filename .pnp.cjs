@@ -33,7 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:18.11.7"],\
           ["@types/node-fetch", "npm:2.6.2"],\
           ["dacouchbot", "workspace:."],\
-          ["discord-api-types", "npm:0.37.15"],\
+          ["discord-api-types", "npm:0.38.33"],\
           ["discord-interactions", "npm:3.2.0"],\
           ["itty-router", "npm:2.6.6"],\
           ["node-fetch", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7"],\
@@ -2009,7 +2009,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:18.11.7"],\
           ["@types/node-fetch", "npm:2.6.2"],\
           ["dacouchbot", "workspace:."],\
-          ["discord-api-types", "npm:0.37.15"],\
+          ["discord-api-types", "npm:0.38.33"],\
           ["discord-interactions", "npm:3.2.0"],\
           ["itty-router", "npm:2.6.6"],\
           ["node-fetch", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7"],\
@@ -2190,10 +2190,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["discord-api-types", [\
-      ["npm:0.37.15", {\
-        "packageLocation": "./.yarn/cache/discord-api-types-npm-0.37.15-f10acf2428-4c3482ae41.zip/node_modules/discord-api-types/",\
+      ["npm:0.38.33", {\
+        "packageLocation": "./.yarn/cache/discord-api-types-npm-0.38.33-b360a08fe0-0776401c76.zip/node_modules/discord-api-types/",\
         "packageDependencies": [\
-          ["discord-api-types", "npm:0.37.15"]\
+          ["discord-api-types", "npm:0.38.33"]\
         ],\
         "linkType": "HARD"\
       }]\
