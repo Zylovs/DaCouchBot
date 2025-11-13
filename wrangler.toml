@@ -1,4 +1,8 @@
 name = "dacouchbot"
 main = "src/index.ts"
+
+# must be recent or Workers Types v4 will fail
 compatibility_date = "2024-01-01"
+
+# required for Discord bots running on Cloudflare Workers
 compatibility_flags = ["nodejs_compat"]

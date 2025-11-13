@@ -11,7 +11,7 @@ const RAW_RUNTIME_STATE =
   ],\
   "dependencyTreeRoots": [\
     {\
-      "name": "serverless-discordbot",\
+      "name": "dacouchbot",\
       "reference": "workspace:."\
     }\
   ],\
@@ -19,7 +19,7 @@ const RAW_RUNTIME_STATE =
   "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
   "pnpZipBackend": "libzip",\
   "fallbackExclusionList": [\
-    ["serverless-discordbot", ["workspace:."]]\
+    ["dacouchbot", ["workspace:."]]\
   ],\
   "fallbackPool": [\
   ],\
@@ -32,13 +32,13 @@ const RAW_RUNTIME_STATE =
           ["@cloudflare/workers-types", "npm:4.20251113.0"],\
           ["@types/node", "npm:18.11.7"],\
           ["@types/node-fetch", "npm:2.6.2"],\
+          ["dacouchbot", "workspace:."],\
           ["discord-api-types", "npm:0.37.15"],\
           ["discord-interactions", "npm:3.2.0"],\
           ["itty-router", "npm:2.6.6"],\
-          ["node-fetch", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:2.6.7"],\
-          ["serverless-discordbot", "workspace:."],\
-          ["typescript", "patch:typescript@npm%3A4.8.4#optional!builtin<compat/typescript>::version=4.8.4&hash=1a91c8"],\
-          ["wrangler", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:4.48.0"]\
+          ["node-fetch", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7"],\
+          ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
+          ["wrangler", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -86,10 +86,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:7f80c732ac7796b92bb0b42f2acc47784203d05fada4f08ae5e2a1204ef27a9be6386bb68f5caa77b8af7c03a7bc9c3962d88dce5ce79d477cc5f0162012eeba#npm:2.7.10", {\
-        "packageLocation": "./.yarn/__virtual__/@cloudflare-unenv-preset-virtual-7c49b4da95/0/cache/@cloudflare-unenv-preset-npm-2.7.10-9ec92f99c2-3eaeb2cdb4.zip/node_modules/@cloudflare/unenv-preset/",\
+      ["virtual:37b56801f821909ec53e801b628599adbb26f0174a1aec0fd2515618af27855a2d8f8f943ea6cf8e96ff25006ce577170f15a1c52f6cbb3be6334abf00df477a#npm:2.7.10", {\
+        "packageLocation": "./.yarn/__virtual__/@cloudflare-unenv-preset-virtual-4b99db1b79/0/cache/@cloudflare-unenv-preset-npm-2.7.10-9ec92f99c2-3eaeb2cdb4.zip/node_modules/@cloudflare/unenv-preset/",\
         "packageDependencies": [\
-          ["@cloudflare/unenv-preset", "virtual:7f80c732ac7796b92bb0b42f2acc47784203d05fada4f08ae5e2a1204ef27a9be6386bb68f5caa77b8af7c03a7bc9c3962d88dce5ce79d477cc5f0162012eeba#npm:2.7.10"],\
+          ["@cloudflare/unenv-preset", "virtual:37b56801f821909ec53e801b628599adbb26f0174a1aec0fd2515618af27855a2d8f8f943ea6cf8e96ff25006ce577170f15a1c52f6cbb3be6334abf00df477a#npm:2.7.10"],\
           ["@types/unenv", null],\
           ["@types/workerd", null],\
           ["unenv", "npm:2.0.0-rc.24"],\
@@ -1998,6 +1998,25 @@ const RAW_RUNTIME_STATE =
           ["type", "npm:2.7.3"]\
         ],\
         "linkType": "HARD"\
+      }]\
+    ]],\
+    ["dacouchbot", [\
+      ["workspace:.", {\
+        "packageLocation": "./",\
+        "packageDependencies": [\
+          ["20", "npm:3.1.9"],\
+          ["@cloudflare/workers-types", "npm:4.20251113.0"],\
+          ["@types/node", "npm:18.11.7"],\
+          ["@types/node-fetch", "npm:2.6.2"],\
+          ["dacouchbot", "workspace:."],\
+          ["discord-api-types", "npm:0.37.15"],\
+          ["discord-interactions", "npm:3.2.0"],\
+          ["itty-router", "npm:2.6.6"],\
+          ["node-fetch", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7"],\
+          ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
+          ["wrangler", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0"]\
+        ],\
+        "linkType": "SOFT"\
       }]\
     ]],\
     ["dateformat", [\
@@ -5156,12 +5175,12 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:2.6.7", {\
-        "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-75dc319ed8/0/cache/node-fetch-npm-2.6.7-777aa2a6df-4bc9245383.zip/node_modules/node-fetch/",\
+      ["virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7", {\
+        "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-80eb5d0e31/0/cache/node-fetch-npm-2.6.7-777aa2a6df-4bc9245383.zip/node_modules/node-fetch/",\
         "packageDependencies": [\
           ["@types/encoding", null],\
           ["encoding", null],\
-          ["node-fetch", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:2.6.7"],\
+          ["node-fetch", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:2.6.7"],\
           ["whatwg-url", "npm:5.0.0"]\
         ],\
         "packagePeers": [\
@@ -6152,25 +6171,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["serverless-discordbot", [\
-      ["workspace:.", {\
-        "packageLocation": "./",\
-        "packageDependencies": [\
-          ["20", "npm:3.1.9"],\
-          ["@cloudflare/workers-types", "npm:4.20251113.0"],\
-          ["@types/node", "npm:18.11.7"],\
-          ["@types/node-fetch", "npm:2.6.2"],\
-          ["discord-api-types", "npm:0.37.15"],\
-          ["discord-interactions", "npm:3.2.0"],\
-          ["itty-router", "npm:2.6.6"],\
-          ["node-fetch", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:2.6.7"],\
-          ["serverless-discordbot", "workspace:."],\
-          ["typescript", "patch:typescript@npm%3A4.8.4#optional!builtin<compat/typescript>::version=4.8.4&hash=1a91c8"],\
-          ["wrangler", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:4.48.0"]\
-        ],\
-        "linkType": "SOFT"\
-      }]\
-    ]],\
     ["set-function-length", [\
       ["npm:1.2.2", {\
         "packageLocation": "./.yarn/cache/set-function-length-npm-1.2.2-243073748b-505d62b8e0.zip/node_modules/set-function-length/",\
@@ -6950,10 +6950,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["typescript", [\
-      ["patch:typescript@npm%3A4.8.4#optional!builtin<compat/typescript>::version=4.8.4&hash=1a91c8", {\
-        "packageLocation": "./.yarn/cache/typescript-patch-14bc8df10f-5d81fd8cf5.zip/node_modules/typescript/",\
+      ["patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5", {\
+        "packageLocation": "./.yarn/cache/typescript-patch-6fda4d02cf-696e1b017b.zip/node_modules/typescript/",\
         "packageDependencies": [\
-          ["typescript", "patch:typescript@npm%3A4.8.4#optional!builtin<compat/typescript>::version=4.8.4&hash=1a91c8"]\
+          ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7327,11 +7327,11 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:4.48.0", {\
-        "packageLocation": "./.yarn/__virtual__/wrangler-virtual-7f80c732ac/0/cache/wrangler-npm-4.48.0-603ef7e1ab-5ef85734e0.zip/node_modules/wrangler/",\
+      ["virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0", {\
+        "packageLocation": "./.yarn/__virtual__/wrangler-virtual-37b56801f8/0/cache/wrangler-npm-4.48.0-603ef7e1ab-5ef85734e0.zip/node_modules/wrangler/",\
         "packageDependencies": [\
           ["@cloudflare/kv-asset-handler", "npm:0.4.0"],\
-          ["@cloudflare/unenv-preset", "virtual:7f80c732ac7796b92bb0b42f2acc47784203d05fada4f08ae5e2a1204ef27a9be6386bb68f5caa77b8af7c03a7bc9c3962d88dce5ce79d477cc5f0162012eeba#npm:2.7.10"],\
+          ["@cloudflare/unenv-preset", "virtual:37b56801f821909ec53e801b628599adbb26f0174a1aec0fd2515618af27855a2d8f8f943ea6cf8e96ff25006ce577170f15a1c52f6cbb3be6334abf00df477a#npm:2.7.10"],\
           ["@cloudflare/workers-types", "npm:4.20251113.0"],\
           ["@types/cloudflare__workers-types", null],\
           ["blake3-wasm", "npm:2.1.5"],\
@@ -7341,7 +7341,7 @@ const RAW_RUNTIME_STATE =
           ["path-to-regexp", "npm:6.3.0"],\
           ["unenv", "npm:2.0.0-rc.24"],\
           ["workerd", "npm:1.20251109.0"],\
-          ["wrangler", "virtual:9af42c0dddc783d40223d6bdb1c9993805b2bcab7664473f10eb54571c155ddad99faa59e753f75fafaacdf77df7745d0b81268362835397f427060464e26bbc#npm:4.48.0"]\
+          ["wrangler", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0"]\
         ],\
         "packagePeers": [\
           "@cloudflare/workers-types",\

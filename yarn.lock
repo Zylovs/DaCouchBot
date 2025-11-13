@@ -84,7 +84,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:4":
+"@cloudflare/workers-types@npm:^4.20250129.0":
   version: 4.20251113.0
   resolution: "@cloudflare/workers-types@npm:4.20251113.0"
   checksum: 10/87630437621ce5e40db581136e944d5e1af4925975af822611869fc07a11eba1812735dbec3ddfef07aa52da143f6887e1f83b4846b64672b84ad21a965348b0
@@ -1694,6 +1694,23 @@ __metadata:
   checksum: 10/a4740c65f5808ae78c0d8842a8c91ead5a412af3056166c26f235716d0c396d8eac7cd3085ff3b4529137897d27eaee623eb3ab53435fcb15a13232b6a892901
   languageName: node
   linkType: hard
+
+"dacouchbot@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "dacouchbot@workspace:."
+  dependencies:
+    20: "npm:^3.1.9"
+    "@cloudflare/workers-types": "npm:^4.20250129.0"
+    "@types/node": "npm:^18.11.7"
+    "@types/node-fetch": "npm:^2.6.2"
+    discord-api-types: "npm:^0.37.15"
+    discord-interactions: "npm:^3.2.0"
+    itty-router: "npm:^2.6.6"
+    node-fetch: "npm:^2"
+    typescript: "npm:^5.0.0"
+    wrangler: "npm:^4.48.0"
+  languageName: unknown
+  linkType: soft
 
 "dateformat@npm:^2.0.0":
   version: 2.2.0
@@ -5475,23 +5492,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serverless-discordbot@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "serverless-discordbot@workspace:."
-  dependencies:
-    20: "npm:^3.1.9"
-    "@cloudflare/workers-types": "npm:4"
-    "@types/node": "npm:^18.11.7"
-    "@types/node-fetch": "npm:^2.6.2"
-    discord-api-types: "npm:^0.37.15"
-    discord-interactions: "npm:^3.2.0"
-    itty-router: "npm:^2.6.6"
-    node-fetch: "npm:^2"
-    typescript: "npm:^4.8.4"
-    wrangler: "npm:^4.48.0"
-  languageName: unknown
-  linkType: soft
-
 "set-function-length@npm:^1.2.2":
   version: 1.2.2
   resolution: "set-function-length@npm:1.2.2"
@@ -6237,23 +6237,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.8.4":
-  version: 4.8.4
-  resolution: "typescript@npm:4.8.4"
+"typescript@npm:^5.0.0":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/f985d8dd6ae815753d61cb81e434f3a4a5796ac52e423370fca6ad11bcd188df4013d82e3ba3b88c9746745b9341390ba68f862dc9d30bac6465e0699f2a795b
+  checksum: 10/c089d9d3da2729fd4ac517f9b0e0485914c4b3c26f80dc0cffcb5de1719a17951e92425d55db59515c1a7ddab65808466debb864d0d56dcf43f27007d0709594
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.8.4#optional!builtin<compat/typescript>":
-  version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#optional!builtin<compat/typescript>::version=4.8.4&hash=1a91c8"
+"typescript@patch:typescript@npm%3A^5.0.0#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/5d81fd8cf5152091a0c0b84ebc868de8433583072a340c4899e0fc7ad6a80314b880a1466868c9a6a1f640c3d1f2fe7f41f8c541b99d78c8b414263dfa27eba3
+  checksum: 10/696e1b017bc2635f4e0c94eb4435357701008e2f272f553d06e35b494b8ddc60aa221145e286c28ace0c89ee32827a28c2040e3a69bdc108b1a5dc8fb40b72e3
   languageName: node
   linkType: hard
 
