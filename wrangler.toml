@@ -1,4 +1,4 @@
 name = "dacouchbot"
 main = "src/index.ts"
-compatibility_date = "2022-10-29"
+compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
