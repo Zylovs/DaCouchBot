@@ -4,7 +4,6 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import fetch from "node-fetch"
 import commands from './commands';
 import { env } from 'process';
 
