@@ -29,10 +29,10 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@cloudflare/workers-types", "npm:4.20251113.0"],\
-          ["@types/node", "npm:18.11.7"],\
+          ["@types/node", "npm:18.19.130"],\
           ["dacouchbot", "workspace:."],\
           ["discord-api-types", "npm:0.37.120"],\
-          ["discord-interactions", "npm:3.2.0"],\
+          ["discord-interactions", "npm:3.4.0"],\
           ["itty-router", "npm:2.6.6"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
           ["wrangler", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0"]\
@@ -711,10 +711,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/node", [\
-      ["npm:18.11.7", {\
-        "packageLocation": "./.yarn/cache/@types-node-npm-18.11.7-0cf2ce3a09-e19d07a1f9.zip/node_modules/@types/node/",\
+      ["npm:18.19.130", {\
+        "packageLocation": "./.yarn/cache/@types-node-npm-18.19.130-df6d3a4ff9-ebb85c6edc.zip/node_modules/@types/node/",\
         "packageDependencies": [\
-          ["@types/node", "npm:18.11.7"]\
+          ["@types/node", "npm:18.19.130"],\
+          ["undici-types", "npm:5.26.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -893,10 +894,10 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@cloudflare/workers-types", "npm:4.20251113.0"],\
-          ["@types/node", "npm:18.11.7"],\
+          ["@types/node", "npm:18.19.130"],\
           ["dacouchbot", "workspace:."],\
           ["discord-api-types", "npm:0.37.120"],\
-          ["discord-interactions", "npm:3.2.0"],\
+          ["discord-interactions", "npm:3.4.0"],\
           ["itty-router", "npm:2.6.6"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
           ["wrangler", "virtual:796920b8a23e6147727e5b9bd483510454e1b681971a18ee76ebd97229bd32148b86a21c194f8e3141917a35018963f060171002cbacdb87254e25ed800a051a#npm:4.48.0"]\
@@ -946,10 +947,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["discord-interactions", [\
-      ["npm:3.2.0", {\
-        "packageLocation": "./.yarn/cache/discord-interactions-npm-3.2.0-1168724448-e4c480eb2a.zip/node_modules/discord-interactions/",\
+      ["npm:3.4.0", {\
+        "packageLocation": "./.yarn/cache/discord-interactions-npm-3.4.0-b22cb93a49-8d005a93bd.zip/node_modules/discord-interactions/",\
         "packageDependencies": [\
-          ["discord-interactions", "npm:3.2.0"],\
+          ["discord-interactions", "npm:3.4.0"],\
           ["tweetnacl", "npm:1.0.3"]\
         ],\
         "linkType": "HARD"\
@@ -1818,6 +1819,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/undici-npm-7.14.0-bfc8735d4a-df71e67fcc.zip/node_modules/undici/",\
         "packageDependencies": [\
           ["undici", "npm:7.14.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["undici-types", [\
+      ["npm:5.26.5", {\
+        "packageLocation": "./.yarn/cache/undici-types-npm-5.26.5-de4f7c7bb9-0097779d94.zip/node_modules/undici-types/",\
+        "packageDependencies": [\
+          ["undici-types", "npm:5.26.5"]\
         ],\
         "linkType": "HARD"\
       }]\
