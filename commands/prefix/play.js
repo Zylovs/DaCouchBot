@@ -2,7 +2,7 @@ import { QueryType } from "discord-player";
 
 export default {
     name: "play",
-    description: "Play a song",
+    description: "Play a song or playlist",
     async execute(message, args) {
         const query = args.join(" ");
         if (!query) return message.reply("❌ Please provide a song name or URL.");
@@ -11,39 +11,36 @@ export default {
         if (!channel) return message.reply("❌ You must be in a voice channel.");
 
         const player = message.client.player;
-
-        // ✅ Create a queue using the NEW API
         const queue = player.nodes.create(message.guild.id, {
             metadata: message.channel
         });
 
         try {
-            // Connect to voice if not already connected
-            if (!queue.connection) {
-                await queue.connect(channel);
-            }
+            if (!queue.connection) await queue.connect(channel);
         } catch {
             queue.delete();
             return message.reply("❌ Couldn't join the voice channel.");
         }
 
-        // Search for the track
-        const searchResult = await player.search(query, {
+        // Detect if it's a playlist
+        let searchType = query.includes("list=") ? QueryType.YOUTUBE_PLAYLIST : QueryType.AUTO;
+
+        const result = await player.search(query, {
             requestedBy: message.author,
-            searchEngine: QueryType.AUTO
+            searchEngine: searchType
         });
 
-        if (!searchResult.hasTracks())
-            return message.reply("❌ No results found.");
+        if (!result.hasTracks()) return message.reply("❌ No results found.");
 
-        // Add the first track to queue
-        await queue.addTrack(searchResult.tracks[0]);
-
-        // Play if nothing is currently playing
-        if (!queue.node.isPlaying()) {
-            await queue.node.play();
+        // Add track(s)
+        if (result.playlist) {
+            queue.addTracks(result.tracks);
+            message.reply(`🎶 Added playlist **${result.playlist.title}** with ${result.tracks.length} tracks to the queue!`);
+        } else {
+            queue.addTrack(result.tracks[0]);
+            message.reply(`🎶 Added **${result.tracks[0].title}** to the queue!`);
         }
 
-        message.reply(`🎶 Added **${searchResult.tracks[0].title}** to the queue!`);
+        if (!queue.node.isPlaying()) queue.node.play();
     }
 };
