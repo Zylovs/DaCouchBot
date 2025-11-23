@@ -1,52 +1,22 @@
 services:
-  # -------------------
-  # Discord Bot Service
-  # -------------------
   - type: web
     name: DaCouchBot
     env: node
     plan: free
     region: oregon
     branch: main
-    buildCommand: |
-      npm install
-      apt-get update && apt-get install -y ffmpeg
-    startCommand: npm start
-    envVars: 
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
       - key: TOKEN
-        fromDatabase: false
-        value: "YOUR_BOT_TOKEN"
+        value: "MTQzODM0NDc1NTU5NDM5NTY2MA.GrlwD4.bHOew0IX5xpr9skFlMwlUZUnX4A3h9oWXiGoKo"
       - key: CLIENT_ID
-        fromDatabase: false
-        value: "YOUR_CLIENT_ID"
+        value: "1438344755594395660"
       - key: PREFIX
-        fromDatabase: false
         value: "!"
       - key: LAVALINK_HOST
-        fromDatabase: false
         value: "localhost"
       - key: LAVALINK_PORT
-        fromDatabase: false
         value: "2333"
       - key: LAVALINK_PASSWORD
-        fromDatabase: false
         value: "youshallnotpass"
-
-  # -------------------
-  # Lavalink Service
-  # -------------------
-  - type: web
-    name: Lavalink
-    env: java
-    plan: free
-    branch: main
-    buildCommand: |
-      wget https://github.com/freyacodes/Lavalink/releases/download/3.10.10/Lavalink.jar
-    startCommand: java -jar Lavalink.jar
-    envVars:
-      - key: LAVALINK_PASSWORD
-        fromDatabase: false
-        value: "youshallnotpass"
-      - key: LAVALINK_PORT
-        fromDatabase: false
-        value: "2333"
