@@ -15,7 +15,7 @@ services:
       - key: PREFIX
         value: "!"
       - key: LAVALINK_HOST
-        value: "localhost"
+        value: "https://lavalink-render-c22x.onrender.com/"
       - key: LAVALINK_PORT
         value: "2333"
       - key: LAVALINK_PASSWORD
