@@ -7,12 +7,32 @@ export default {
 
     async execute(interaction) {
         const queue = interaction.client.player.nodes.get(interaction.guild.id);
-        if (!queue || !queue.node.isPlaying()) return interaction.reply("❌ Nothing is playing.");
 
-        const tracks = queue.tracks.map((t, i) => `${i + 1}. ${t.title}`).slice(0, 10);
+        if (!queue || !queue.node.isPlaying()) {
+            return interaction.reply("❌ Nothing is playing.");
+        }
+
+        const currentTrack = queue.currentTrack;
+
+        // v6: queue.tracks is a TrackStore → must use .toArray()
+        const tracks = queue.tracks
+            .toArray()
+            .map((track, i) => `${i + 1}. **${track.title}**`)
+            .slice(0, 10)
+            .join("\n");
+
         const embed = new EmbedBuilder()
             .setTitle("🎵 Current Queue")
-            .setDescription(tracks.join("\n"))
+            .addFields(
+                {
+                    name: "Now Playing",
+                    value: `🎶 **${currentTrack.title}**`
+                },
+                {
+                    name: "Up Next",
+                    value: tracks || "No upcoming tracks."
+                }
+            )
             .setColor(0x1DB954);
 
         interaction.reply({ embeds: [embed] });

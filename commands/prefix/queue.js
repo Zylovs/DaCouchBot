@@ -5,15 +5,37 @@ export default {
     name: "queue",
     description: "View the current music queue",
     async execute(message) {
-        const queue = message.client.player.nodes.get(message.guild.id);
-        if (!queue || !queue.node.isPlaying()) return message.reply("❌ Nothing is playing.");
+        const player = message.client.player;
 
-        const tracks = queue.tracks.map((t, i) => `${i + 1}. ${t.title}`).slice(0, 10);
+        // Get queue for this guild
+        const queue = player.nodes.get(message.guild.id);
+
+        // No queue or not playing
+        if (!queue || !queue.node.isPlaying()) {
+            return message.reply("❌ Nothing is currently playing.");
+        }
+
+        const currentTrack = queue.currentTrack;
+        const tracks = queue.tracks.toArray(); // ensure array
+
+        const queueList = tracks
+            .map((track, i) => `${i + 1}. **${track.title}**`)
+            .slice(0, 10)
+            .join("\n");
 
         const embed = new EmbedBuilder()
-            .setTitle("🎵 Current Queue")
-            .setDescription(tracks.join("\n") || "Queue is empty")
-            .setColor(0x1DB954);
+            .setTitle("🎵 Music Queue")
+            .setColor(0x1DB954)
+            .addFields(
+                {
+                    name: "Now Playing",
+                    value: currentTrack ? `🎶 **${currentTrack.title}**` : "None"
+                },
+                {
+                    name: "Up Next",
+                    value: queueList || "Queue is empty"
+                }
+            );
 
         message.reply({ embeds: [embed] });
     }
