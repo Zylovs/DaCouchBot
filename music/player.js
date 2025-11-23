@@ -1,14 +1,14 @@
 // music/player.js
 import { Player } from "discord-player";
-import { YouTubeExtractor, SoundCloudExtractor, SpotifyExtractor } from "discord-player-extractor";
+import { YouTubeExtractor, SpotifyExtractor, SoundCloudExtractor } from "@discord-player/extractor";
 
-export function createPlayer(client) {
+export async function createPlayer(client) {
     const player = new Player(client);
 
     // Load extractors
-    player.extractors.load(YouTubeExtractor, {});
-    player.extractors.load(SoundCloudExtractor, {});
-    player.extractors.load(SpotifyExtractor, {});
+    await player.extractors.load(YouTubeExtractor);
+    await player.extractors.load(SpotifyExtractor);
+    await player.extractors.load(SoundCloudExtractor);
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
