@@ -1,9 +1,14 @@
 // music/player.js
 import { Player } from "discord-player";
+import pkg from "@discord-player/extractor"; // CommonJS import for v6
+const { YouTubeExtractor } = pkg;            // extract the YouTube extractor
 
 export function createPlayer(client) {
     // Create a new player
     const player = new Player(client);
+
+    // --- Load extractors (required in v6) ---
+    player.extractors.load(YouTubeExtractor);
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
