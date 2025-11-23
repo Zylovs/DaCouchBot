@@ -3,7 +3,7 @@ import { hasMusicPermissions } from "../../music/musicRoles.js";
 
 export default {
     name: "play",
-    description: "Play a song from YouTube",
+    description: "Play a song or playlist from YouTube",
     async execute(message, args) {
         if (!message.member.voice.channel)
             return message.reply("❌ You must be in a voice channel!");
@@ -12,26 +12,36 @@ export default {
             return message.reply("❌ You need the DJ role or admin.");
 
         const query = args.join(" ");
+        if (!query) return message.reply("❌ Please provide a song name or URL.");
+
         const queue = message.client.player.nodes.create(message.guild, {
             metadata: message.channel
         });
 
         try {
+            // Connect to VC if not already
             if (!queue.node.isPlaying()) await queue.connect(message.member.voice.channel);
 
+            // Search
             const result = await message.client.player.search(query, {
                 requestedBy: message.author
             });
 
             if (!result.tracks.length) return message.reply("❌ No results found.");
 
-            queue.addTrack(result.tracks[0]);
-            if (!queue.node.isPlaying()) queue.node.play();
-
-            message.reply(`🎵 Added **${result.tracks[0].title}** to queue.`);
+            // Handle playlist vs single track
+            if (result.playlist) {
+                queue.addTracks(result.tracks);
+                if (!queue.node.isPlaying()) queue.node.play();
+                message.reply(`🎶 Added playlist **${result.playlist.title}** with ${result.tracks.length} songs!`);
+            } else {
+                queue.addTrack(result.tracks[0]);
+                if (!queue.node.isPlaying()) queue.node.play();
+                message.reply(`🎵 Added **${result.tracks[0].title}** to the queue.`);
+            }
         } catch (err) {
             console.error(err);
-            message.reply("❌ Error playing track.");
+            message.reply(`❌ Error playing track: ${err.message}`);
         }
     }
 };
