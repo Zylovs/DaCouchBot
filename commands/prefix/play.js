@@ -1,47 +1,66 @@
-// commands/prefix/play.js
-import { hasMusicPermissions } from "../../music/musicRoles.js";
+import { readdirSync, existsSync } from "fs";
+import path from "path";
+import { pathToFileURL } from "url";
 
-export default {
-    name: "play",
-    description: "Play a song or playlist from YouTube",
-    async execute(message, args) {
-        if (!message.member.voice.channel)
-            return message.reply("❌ You must be in a voice channel!");
+export async function loadCommands(client) {
+    console.log("Loading commands...");
 
-        if (!hasMusicPermissions(message.member))
-            return message.reply("❌ You need the DJ role or admin.");
+    client.commands = new Map();        // Slash commands
+    client.prefixCommands = new Map();  // Prefix commands
 
-        const query = args.join(" ");
-        if (!query) return message.reply("❌ Please provide a song name or URL.");
+    // -----------------------------
+    // LOAD SLASH COMMANDS
+    // -----------------------------
+    const slashFolder = path.join(process.cwd(), "commands", "slash");
 
-        const queue = message.client.player.nodes.create(message.guild, {
-            metadata: message.channel
-        });
+    if (existsSync(slashFolder)) {
+        const slashFiles = readdirSync(slashFolder).filter(f => f.endsWith(".js"));
 
-        try {
-            // Connect to VC if not already
-            if (!queue.node.isPlaying()) await queue.connect(message.member.voice.channel);
+        for (const file of slashFiles) {
+            try {
+                const filePath = path.join(slashFolder, file);
+                const command = await import(pathToFileURL(filePath));
 
-            // Search
-            const result = await message.client.player.search(query, {
-                requestedBy: message.author
-            });
+                if (!command.default?.data?.name) {
+                    console.warn(`⚠️ Slash command "${file}" missing data.name`);
+                    continue;
+                }
 
-            if (!result.tracks.length) return message.reply("❌ No results found.");
-
-            // Handle playlist vs single track
-            if (result.playlist) {
-                queue.addTracks(result.tracks);
-                if (!queue.node.isPlaying()) queue.node.play();
-                message.reply(`🎶 Added playlist **${result.playlist.title}** with ${result.tracks.length} songs!`);
-            } else {
-                queue.addTrack(result.tracks[0]);
-                if (!queue.node.isPlaying()) queue.node.play();
-                message.reply(`🎵 Added **${result.tracks[0].title}** to the queue.`);
+                client.commands.set(command.default.data.name, command.default);
+            } catch (err) {
+                console.error(`❌ Error loading slash command ${file}:`, err);
             }
-        } catch (err) {
-            console.error(err);
-            message.reply(`❌ Error playing track: ${err.message}`);
         }
+    } else {
+        console.warn("⚠️ Slash commands folder not found.");
     }
-};
+
+    // -----------------------------
+    // LOAD PREFIX COMMANDS
+    // -----------------------------
+    const prefixFolder = path.join(process.cwd(), "commands", "prefix");
+
+    if (existsSync(prefixFolder)) {
+        const prefixFiles = readdirSync(prefixFolder).filter(f => f.endsWith(".js"));
+
+        for (const file of prefixFiles) {
+            try {
+                const filePath = path.join(prefixFolder, file);
+                const cmd = await import(pathToFileURL(filePath));
+
+                if (!cmd.default?.name) {
+                    console.warn(`⚠️ Prefix command "${file}" missing name`);
+                    continue;
+                }
+
+                client.prefixCommands.set(cmd.default.name, cmd.default);
+            } catch (err) {
+                console.error(`❌ Error loading prefix command ${file}:`, err);
+            }
+        }
+    } else {
+        console.warn("⚠️ Prefix commands folder not found.");
+    }
+
+    console.log("✅ Commands loaded.");
+}
