@@ -1,66 +1,49 @@
-import { readdirSync, existsSync } from "fs";
-import path from "path";
-import { pathToFileURL } from "url";
+// commands/prefix/play.js
+import { QueryType } from "discord-player";
 
-export async function loadCommands(client) {
-    console.log("Loading commands...");
+export default {
+    name: "play",
+    description: "Play a song",
 
-    client.commands = new Map();        // Slash commands
-    client.prefixCommands = new Map();  // Prefix commands
+    async execute(message, args) {
+        const query = args.join(" ");
+        if (!query) return message.reply("❌ Provide a song name or URL!");
 
-    // -----------------------------
-    // LOAD SLASH COMMANDS
-    // -----------------------------
-    const slashFolder = path.join(process.cwd(), "commands", "slash");
+        // User must be in a voice channel
+        const vc = message.member.voice.channel;
+        if (!vc) return message.reply("❌ You must be in a voice channel!");
 
-    if (existsSync(slashFolder)) {
-        const slashFiles = readdirSync(slashFolder).filter(f => f.endsWith(".js"));
+        const player = message.client.player;
 
-        for (const file of slashFiles) {
-            try {
-                const filePath = path.join(slashFolder, file);
-                const command = await import(pathToFileURL(filePath));
+        // Create queue
+        const queue = await player.createQueue(message.guild, {
+            metadata: message.channel
+        });
 
-                if (!command.default?.data?.name) {
-                    console.warn(`⚠️ Slash command "${file}" missing data.name`);
-                    continue;
-                }
-
-                client.commands.set(command.default.data.name, command.default);
-            } catch (err) {
-                console.error(`❌ Error loading slash command ${file}:`, err);
-            }
+        // Connect to VC
+        try {
+            if (!queue.connection) await queue.connect(vc);
+        } catch (e) {
+            console.log(e);
+            queue.delete();
+            return message.reply("❌ Unable to join voice channel.");
         }
-    } else {
-        console.warn("⚠️ Slash commands folder not found.");
+
+        // Search song
+        const result = await player.search(query, {
+            requestedBy: message.author,
+            searchEngine: QueryType.AUTO
+        });
+
+        if (!result.tracks.length)
+            return message.reply("❌ No results found.");
+
+        // Add first track
+        queue.addTrack(result.tracks[0]);
+
+        // Play if not already playing
+        if (!queue.isPlaying()) queue.node.play();
+
+        return message.reply(`🎵 Added **${result.tracks[0].title}** to queue.`);
     }
-
-    // -----------------------------
-    // LOAD PREFIX COMMANDS
-    // -----------------------------
-    const prefixFolder = path.join(process.cwd(), "commands", "prefix");
-
-    if (existsSync(prefixFolder)) {
-        const prefixFiles = readdirSync(prefixFolder).filter(f => f.endsWith(".js"));
-
-        for (const file of prefixFiles) {
-            try {
-                const filePath = path.join(prefixFolder, file);
-                const cmd = await import(pathToFileURL(filePath));
-
-                if (!cmd.default?.name) {
-                    console.warn(`⚠️ Prefix command "${file}" missing name`);
-                    continue;
-                }
-
-                client.prefixCommands.set(cmd.default.name, cmd.default);
-            } catch (err) {
-                console.error(`❌ Error loading prefix command ${file}:`, err);
-            }
-        }
-    } else {
-        console.warn("⚠️ Prefix commands folder not found.");
-    }
-
-    console.log("✅ Commands loaded.");
-}
+};

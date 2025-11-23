@@ -1,5 +1,6 @@
+// commands/slash/play.js
 import { SlashCommandBuilder } from "discord.js";
-import { hasMusicPermissions } from "../../music/musicRoles.js";
+import { QueryType } from "discord-player";
 
 export default {
     data: new SlashCommandBuilder()
@@ -12,34 +13,39 @@ export default {
         ),
 
     async execute(interaction) {
-        if (!interaction.member.voice.channel)
-            return interaction.reply("❌ You must be in a voice channel!");
-
-        if (!hasMusicPermissions(interaction.member))
-            return interaction.reply("❌ You need the DJ role or admin.");
-
         const query = interaction.options.getString("query");
 
-        const queue = interaction.client.player.nodes.create(interaction.guild, {
+        const vc = interaction.member.voice.channel;
+        if (!vc)
+            return interaction.reply("❌ You must be in a voice channel!");
+
+        const player = interaction.client.player;
+
+        // Create queue
+        const queue = await player.createQueue(interaction.guild, {
             metadata: interaction.channel
         });
 
         try {
-            if (!queue.node.isPlaying()) await queue.connect(interaction.member.voice.channel);
-
-            const result = await interaction.client.player.search(query, {
-                requestedBy: interaction.user
-            });
-
-            if (!result.tracks.length) return interaction.reply("❌ No results found.");
-
-            queue.addTrack(result.tracks[0]);
-            if (!queue.node.isPlaying()) queue.node.play();
-
-            interaction.reply(`🎵 Added **${result.tracks[0].title}** to queue.`);
+            if (!queue.connection) await queue.connect(vc);
         } catch (err) {
             console.error(err);
-            interaction.reply("❌ Error playing track.");
+            queue.delete();
+            return interaction.reply("❌ Couldn't join your voice channel.");
         }
+
+        // Search song
+        const result = await player.search(query, {
+            requestedBy: interaction.user,
+            searchEngine: QueryType.AUTO
+        });
+
+        if (!result.tracks.length)
+            return interaction.reply("❌ No tracks found.");
+
+        queue.addTrack(result.tracks[0]);
+        if (!queue.isPlaying()) queue.node.play();
+
+        interaction.reply(`🎶 Added **${result.tracks[0].title}** to queue.`);
     }
 };
