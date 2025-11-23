@@ -1,9 +1,12 @@
 // music/player.js
 import { Player } from "discord-player";
+import { YouTubeExtractor } from "@discord-player/extractor"; // v6 compatible
 
 export function createPlayer(client) {
-    // Create a new player
     const player = new Player(client);
+
+    // Load the YouTube extractor
+    player.extractors.load(YouTubeExtractor);
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
