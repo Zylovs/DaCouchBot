@@ -1,6 +1,8 @@
 // music/player.js
 import { Player } from "discord-player";
-import { YouTubeExtractor, SpotifyExtractor, SoundCloudExtractor } from "@discord-player/extractor";
+import extractorPkg from "@discord-player/extractor";
+
+const { YouTubeExtractor, SpotifyExtractor, SoundCloudExtractor } = extractorPkg;
 
 export async function createPlayer(client) {
     const player = new Player(client);
