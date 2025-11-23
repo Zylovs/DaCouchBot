@@ -1,6 +1,5 @@
 // music/player.js
 import { Player } from "discord-player";
-import pkg from "@discord-player/extractor"; // CommonJS import for v6
 
 export function createPlayer(client) {
     // Create a new player
