@@ -10,24 +10,34 @@ export async function createPlayer(client) {
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
-        queue.metadata?.send(`🎶 Now playing: **${track.title}**`);
+        try {
+            queue.metadata?.send(`🎶 Now playing: **${track.title}**`);
+        } catch {}
     });
 
     player.events.on("audioTrackAdd", (queue, track) => {
-        queue.metadata?.send(`➕ Added to queue: **${track.title}**`);
+        try {
+            queue.metadata?.send(`➕ Added to queue: **${track.title}**`);
+        } catch {}
     });
 
     player.events.on("playerSkip", (queue, track) => {
-        queue.metadata?.send(`⏭ Skipped: **${track.title}**`);
+        try {
+            queue.metadata?.send(`⏭ Skipped: **${track.title}**`);
+        } catch {}
     });
 
     player.events.on("queueEnd", (queue) => {
-        queue.metadata?.send("📭 Queue finished.");
+        try {
+            queue.metadata?.send("📭 Queue finished.");
+        } catch {}
     });
 
     player.events.on("error", (queue, error) => {
         console.error("Player Error:", error);
-        queue.metadata?.send("❌ A playback error occurred.");
+        try {
+            queue.metadata?.send("❌ A playback error occurred.");
+        } catch {}
     });
 
     // Attach the player to the client

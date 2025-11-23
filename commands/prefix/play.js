@@ -11,6 +11,8 @@ export default {
         if (!channel) return message.reply("❌ You must be in a voice channel.");
 
         const player = message.client.player;
+
+        // Create a queue for this guild
         const queue = player.nodes.create(message.guild, {
             metadata: message.channel
         });
@@ -22,7 +24,11 @@ export default {
             return message.reply("❌ Couldn't join the voice channel.");
         }
 
-        const searchType = query.includes("list=") ? QueryType.YOUTUBE_PLAYLIST : QueryType.AUTO;
+        // Detect search type
+        let searchType;
+        if (query.includes("list=")) searchType = QueryType.YOUTUBE_PLAYLIST;
+        else if (query.includes("youtube.com") || query.includes("youtu.be")) searchType = QueryType.YOUTUBE_VIDEO;
+        else searchType = QueryType.AUTO;
 
         const result = await player.search(query, {
             requestedBy: message.author,

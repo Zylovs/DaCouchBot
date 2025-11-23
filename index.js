@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import { loadCommands } from './handlers/commandHandler.js';
 import { registerEventHandlers } from './handlers/events.js';
-import { createPlayer } from './music/player.js'; // <-- ADD THIS
+import { createPlayer } from './music/player.js';
 
 const client = new Client({
   intents: [
@@ -17,17 +17,27 @@ client.commands = new Collection();
 client.prefix = process.env.PREFIX || "!";
 
 // ------------------------------
-// INITIALIZE MUSIC PLAYER
+// ASYNC INIT FUNCTION
 // ------------------------------
-createPlayer(client); // <-- ADD THIS (prevents "player is undefined")
+async function initBot() {
+  try {
+    // Initialize music player and await extractors loading
+    await createPlayer(client);
 
-// ------------------------------
-// LOAD COMMANDS + EVENTS
-// ------------------------------
-await loadCommands(client);
-registerEventHandlers(client);
+    // Load commands
+    await loadCommands(client);
 
-// ------------------------------
-// LOGIN
-// ------------------------------
-client.login(process.env.TOKEN);
+    // Register events
+    registerEventHandlers(client);
+
+    // Login
+    await client.login(process.env.TOKEN);
+
+    console.log('✅ Bot fully online.');
+  } catch (err) {
+    console.error('❌ Bot initialization failed:', err);
+  }
+}
+
+// Start the bot
+initBot();
