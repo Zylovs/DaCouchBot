@@ -7,7 +7,8 @@ export default {
             return message.reply("❌ Please provide a number between 0-100.");
 
         const queue = message.client.player.nodes.get(message.guild.id);
-        if (!queue) return message.reply("❌ Nothing is playing.");
+        if (!queue || !queue.currentTrack)
+            return message.reply("❌ Nothing is playing.");
 
         queue.node.setVolume(volume);
         message.reply(`🔊 Volume set to **${volume}%**`);

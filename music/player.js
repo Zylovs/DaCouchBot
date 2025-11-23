@@ -1,9 +1,12 @@
 // music/player.js
 import { Player } from "discord-player";
 
-export function createPlayer(client) {
+export async function createPlayer(client) {
     // Create a new player
     const player = new Player(client);
+
+    // Load default extractors (YouTube, Spotify, etc.)
+    await player.extractors.loadDefault();
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {

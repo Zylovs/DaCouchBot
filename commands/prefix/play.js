@@ -11,7 +11,7 @@ export default {
         if (!channel) return message.reply("❌ You must be in a voice channel.");
 
         const player = message.client.player;
-        const queue = player.nodes.create(message.guild.id, {
+        const queue = player.nodes.create(message.guild, {
             metadata: message.channel
         });
 
@@ -22,8 +22,7 @@ export default {
             return message.reply("❌ Couldn't join the voice channel.");
         }
 
-        // Detect if it's a playlist
-        let searchType = query.includes("list=") ? QueryType.YOUTUBE_PLAYLIST : QueryType.AUTO;
+        const searchType = query.includes("list=") ? QueryType.YOUTUBE_PLAYLIST : QueryType.AUTO;
 
         const result = await player.search(query, {
             requestedBy: message.author,
@@ -32,7 +31,6 @@ export default {
 
         if (!result.hasTracks()) return message.reply("❌ No results found.");
 
-        // Add track(s)
         if (result.playlist) {
             queue.addTracks(result.tracks);
             message.reply(`🎶 Added playlist **${result.playlist.title}** with ${result.tracks.length} tracks to the queue!`);
@@ -41,6 +39,6 @@ export default {
             message.reply(`🎶 Added **${result.tracks[0].title}** to the queue!`);
         }
 
-        if (!queue.node.isPlaying()) queue.node.play();
+        if (!queue.node.isPlaying()) await queue.node.play();
     }
 };
