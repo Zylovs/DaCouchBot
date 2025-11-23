@@ -1,49 +1,49 @@
-// commands/prefix/play.js
 import { QueryType } from "discord-player";
 
 export default {
     name: "play",
     description: "Play a song",
-
     async execute(message, args) {
         const query = args.join(" ");
-        if (!query) return message.reply("❌ Provide a song name or URL!");
+        if (!query) return message.reply("❌ Please provide a song name or URL.");
 
-        // User must be in a voice channel
-        const vc = message.member.voice.channel;
-        if (!vc) return message.reply("❌ You must be in a voice channel!");
+        const channel = message.member.voice.channel;
+        if (!channel) return message.reply("❌ You must be in a voice channel.");
 
         const player = message.client.player;
 
-        // Create queue
-        const queue = await player.createQueue(message.guild, {
+        // ✅ Create a queue using the NEW API
+        const queue = player.nodes.create(message.guild.id, {
             metadata: message.channel
         });
 
-        // Connect to VC
         try {
-            if (!queue.connection) await queue.connect(vc);
-        } catch (e) {
-            console.log(e);
+            // Connect to voice if not already connected
+            if (!queue.connection) {
+                await queue.connect(channel);
+            }
+        } catch {
             queue.delete();
-            return message.reply("❌ Unable to join voice channel.");
+            return message.reply("❌ Couldn't join the voice channel.");
         }
 
-        // Search song
-        const result = await player.search(query, {
+        // Search for the track
+        const searchResult = await player.search(query, {
             requestedBy: message.author,
             searchEngine: QueryType.AUTO
         });
 
-        if (!result.tracks.length)
+        if (!searchResult.hasTracks())
             return message.reply("❌ No results found.");
 
-        // Add first track
-        queue.addTrack(result.tracks[0]);
+        // Add the first track to queue
+        await queue.addTrack(searchResult.tracks[0]);
 
-        // Play if not already playing
-        if (!queue.isPlaying()) queue.node.play();
+        // Play if nothing is currently playing
+        if (!queue.node.isPlaying()) {
+            await queue.node.play();
+        }
 
-        return message.reply(`🎵 Added **${result.tracks[0].title}** to queue.`);
+        message.reply(`🎶 Added **${searchResult.tracks[0].title}** to the queue!`);
     }
 };
