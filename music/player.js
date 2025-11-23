@@ -1,15 +1,11 @@
 // music/player.js
 import { Player } from "discord-player";
-import pkg from "@discord-player/extractor"; // default import for CommonJS
-const { YouTubeExtractor } = pkg;           // destructure what you need
 
 export function createPlayer(client) {
+    // Create a new player
     const player = new Player(client);
 
-    // Load YouTube extractor
-    player.extractors.load(YouTubeExtractor);
-
-    // Player events
+    // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
         queue.metadata?.send(`🎶 Now playing: **${track.title}**`);
     });
@@ -22,7 +18,7 @@ export function createPlayer(client) {
         queue.metadata?.send(`⏭ Skipped: **${track.title}**`);
     });
 
-    player.events.on("queueEnd", queue => {
+    player.events.on("queueEnd", (queue) => {
         queue.metadata?.send("📭 Queue finished.");
     });
 
@@ -31,5 +27,6 @@ export function createPlayer(client) {
         queue.metadata?.send("❌ A playback error occurred.");
     });
 
+    // Attach the player to the client
     client.player = player;
 }
