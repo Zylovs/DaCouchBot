@@ -1,30 +1,36 @@
 // music/player.js
 import { Player } from "discord-player";
+import extractorPkg from "@discord-player/extractor"; // v6 CommonJS import
+const { YouTubeExtractor, SpotifyExtractor, SoundCloudExtractor } = extractorPkg;
 
 export function createPlayer(client) {
-    const player = new Player(client, {
-        ytdlOptions: {
-            quality: "highestaudio",
-            highWaterMark: 1 << 25
-        }
-    });
+    const player = new Player(client);
+
+    // Load extractors (v6)
+    player.extractors.load(YouTubeExtractor);
+    player.extractors.load(SpotifyExtractor);
+    player.extractors.load(SoundCloudExtractor);
 
     // --- Player Events ---
-    player.on("trackStart", (queue, track) => {
+    player.events.on("playerStart", (queue, track) => {
         queue.metadata?.send(`🎶 Now playing: **${track.title}**`);
     });
 
-    player.on("trackAdd", (queue, track) => {
+    player.events.on("audioTrackAdd", (queue, track) => {
         queue.metadata?.send(`➕ Added to queue: **${track.title}**`);
     });
 
-    player.on("queueEnd", queue => {
+    player.events.on("playerSkip", (queue, track) => {
+        queue.metadata?.send(`⏭ Skipped: **${track.title}**`);
+    });
+
+    player.events.on("queueEnd", queue => {
         queue.metadata?.send("📭 Queue finished.");
     });
 
-    player.on("error", (error, queue) => {
+    player.events.on("error", (queue, error) => {
         console.error("Player Error:", error);
-        queue?.metadata?.send("❌ A playback error occurred.");
+        queue.metadata?.send("❌ A playback error occurred.");
     });
 
     client.player = player;

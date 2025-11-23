@@ -8,9 +8,11 @@ export default {
     async execute(interaction) {
         const queue = interaction.client.player.nodes.get(interaction.guild.id);
 
-        if (!queue || !queue.currentTrack) {
+        if (!queue || !queue.currentTrack)
             return interaction.reply("❌ Nothing is playing.");
-        }
+
+        if (!queue.node.isPaused())
+            return interaction.reply("❌ The player is not paused.");
 
         queue.node.setPaused(false);
         interaction.reply("▶ Resumed the player.");
