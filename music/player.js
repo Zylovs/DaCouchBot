@@ -1,15 +1,9 @@
 // music/player.js
 import { Player } from "discord-player";
-import extractorPkg from "@discord-player/extractor"; // v6 CommonJS import
-const { YouTubeExtractor, SpotifyExtractor, SoundCloudExtractor } = extractorPkg;
 
 export function createPlayer(client) {
+    // Create a new player
     const player = new Player(client);
-
-    // Load extractors (v6)
-    player.extractors.load(YouTubeExtractor);
-    player.extractors.load(SpotifyExtractor);
-    player.extractors.load(SoundCloudExtractor);
 
     // --- Player Events ---
     player.events.on("playerStart", (queue, track) => {
@@ -33,5 +27,6 @@ export function createPlayer(client) {
         queue.metadata?.send("❌ A playback error occurred.");
     });
 
+    // Attach the player to the client
     client.player = player;
 }
