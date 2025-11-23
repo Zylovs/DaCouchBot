@@ -12,7 +12,7 @@ services:
       npm install
       apt-get update && apt-get install -y ffmpeg
     startCommand: npm start
-    envVars:
+    envVars: 
       - key: TOKEN
         fromDatabase: false
         value: "YOUR_BOT_TOKEN"
