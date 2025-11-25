@@ -1,17 +1,25 @@
 export default {
     name: "help",
-    description: "Shows all available commands",
-    async execute(message, args, client) {
+    description: "Shows all available prefix commands",
 
-        const commandList = client.commands.map(cmd => `**${cmd.name}** - ${cmd.description}`).join("\n");
+    async execute(message, args) {
+
+        const client = message.client; // Get client from message
+
+        const prefix = client.prefix || "!";
+
+        // List prefix commands
+        const commandList = [...client.prefixCommands.values()]
+            .map(cmd => `**${prefix}${cmd.name}** - ${cmd.description || "No description"}`)
+            .join("\n");
 
         const response = `
-📘 **Help Menu**
+📘 **Help Menu — Prefix Commands**
 Here are my available commands:
 
 ${commandList}
 
-Prefix: **${client.prefix}**
+Prefix: **${prefix}**
 `;
 
         message.channel.send(response);
