@@ -1,87 +1,100 @@
 // events.js
 
 export function registerEventHandlers(client) {
-    // SAFE-INIT collections to prevent crashes
+
+    // SAFE INIT — prevents crashes if missing
     client.buttons = client.buttons || new Map();
     client.menus = client.menus || new Map();
 
-    // =====================================
-    // Slash Commands
-    // =====================================
+    // ==================================================
+    // INTERACTIONS (Slash, Buttons, Menus)
+    // ==================================================
     client.on("interactionCreate", async interaction => {
 
-        // Slash Commands
+        // -----------------------
+        // SLASH COMMANDS
+        // -----------------------
         if (interaction.isChatInputCommand()) {
-            const command = client.commands.get(interaction.commandName);
+
+            const command = client.slashCommands.get(interaction.commandName);
 
             if (!command) {
                 console.warn(`⚠️ Slash command not found: ${interaction.commandName}`);
-                return;
+                return interaction.reply({
+                    content: "That command no longer exists.",
+                    ephemeral: true
+                }).catch(() => {});
             }
 
             try {
                 await command.execute(interaction);
             } catch (err) {
-                console.error("❌ Slash command error:", err);
+                console.error(`❌ Slash command error (${interaction.commandName}):`, err);
 
-                if (!interaction.replied) {
+                if (!interaction.replied && !interaction.deferred) {
                     await interaction.reply({
-                        content: "❌ Error executing slash command.",
+                        content: "❌ An error occurred while running this command.",
                         ephemeral: true
                     }).catch(() => {});
                 }
             }
         }
 
-        // Buttons
+        // -----------------------
+        // BUTTON HANDLERS
+        // -----------------------
         else if (interaction.isButton()) {
+
             const button = client.buttons.get(interaction.customId);
 
             if (!button) {
-                console.warn(`⚠️ Button handler not found: ${interaction.customId}`);
+                console.warn(`⚠️ Missing button handler: ${interaction.customId}`);
                 return;
             }
 
             try {
                 await button.execute(interaction);
             } catch (err) {
-                console.error("❌ Button execution error:", err);
+                console.error(`❌ Button error (${interaction.customId}):`, err);
             }
         }
 
-        // Select Menus
+        // -----------------------
+        // SELECT MENUS
+        // -----------------------
         else if (interaction.isStringSelectMenu()) {
+
             const menu = client.menus.get(interaction.customId);
 
             if (!menu) {
-                console.warn(`⚠️ Menu handler not found: ${interaction.customId}`);
+                console.warn(`⚠️ Missing menu handler: ${interaction.customId}`);
                 return;
             }
 
             try {
                 await menu.execute(interaction);
             } catch (err) {
-                console.error("❌ Menu execution error:", err);
+                console.error(`❌ Menu error (${interaction.customId}):`, err);
             }
         }
+
     });
 
-    // =====================================
-    // Prefix Commands
-    // =====================================
+    // ==================================================
+    // PREFIX COMMANDS
+    // ==================================================
     client.on("messageCreate", async message => {
+
         if (message.author.bot) return;
 
         const prefix = client.prefix || "!";
 
+        // Not a prefix command
         if (!message.content.startsWith(prefix)) return;
 
-        const args = message.content
-            .slice(prefix.length)
-            .trim()
-            .split(/\s+/);
-
+        const args = message.content.slice(prefix.length).trim().split(/\s+/);
         const cmdName = args.shift().toLowerCase();
+
         const command = client.prefixCommands.get(cmdName);
 
         if (!command) {
@@ -92,16 +105,18 @@ export function registerEventHandlers(client) {
         try {
             await command.execute(message, args);
         } catch (err) {
-            console.error("❌ Prefix command error:", err);
-            message.reply("❌ Error executing command.");
+            console.error(`❌ Prefix command error (${cmdName}):`, err);
+            message.reply("❌ Something went wrong running that command.")
+                .catch(() => {});
         }
     });
 
-    // =====================================
-    // Bot Ready
-    // =====================================
-    client.on("ready", () => {
+    // ==================================================
+    // BOT READY
+    // Discord.js v15 rename: “ready” → “clientReady”
+    // ==================================================
+    client.once("clientReady", () => {
         console.log(`✅ Logged in as ${client.user.tag}`);
-        console.log("🔥 Bot fully online and handlers registered.");
+        console.log("🔥 Bot fully online and event handlers registered.");
     });
 }
